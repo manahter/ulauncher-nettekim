@@ -37,7 +37,7 @@ https://github.com/nesivmi/ulauncher-nettekim
 
 * **Nettekim** - Main extension keyword. You can change.
 * **Script** - Script will run when item clicked
-* **Display Style** - t0 or t1
+* **Display Style** - t0.....t6
 ![Preferences](images/pref.png)
 
 ## Links
