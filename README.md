@@ -28,8 +28,9 @@ https://github.com/nesivmi/ulauncher-nettekim
 
 ## Usage
 * > net
-* > net t0    -->   Display style 1
-* > net t1    -->   Display style 2
+* > net t0            -->   Display style 1
+* > net t1            -->   Display style 2
+* > net t6 firefox    -->   Display style 6 and lists the objects that contain firefox.
 ```
 ```
 ## Prefrences
