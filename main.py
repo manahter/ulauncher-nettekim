@@ -14,8 +14,6 @@ class NettekimExtension(Extension):
         self.subscribe(KeywordQueryEvent, KeywordQueryEventListener())
 
 
-
-
 class KeywordQueryEventListener(EventListener):
     def on_event(self, event, extension):
         query = event.get_argument() or str()
@@ -38,16 +36,34 @@ class KeywordQueryEventListener(EventListener):
             for t,k in enumerate(col):
                 liste[str(j)][baslk[t]] = k
         
-           
-        if "t0" in query or extension.preferences["tips"] == "t0":
-            items = [
-                ExtensionResultItem(icon='images/icon.png',
-                                    name=liste[i]["COMMAND"],
-                                    description=liste[i]["NAME"],
-                                    on_enter=RunScriptAction(script))
-                for i in liste.keys()
-            ]
-        elif "t1" in query or extension.preferences["tips"] == "t1":
+        
+        # Seçili Stil'i bulur. Sorgu satırına yazılan kod, ayarlardaki koddan üstündür.
+        selected = extension.preferences["tips"]
+        for i in ["t0", "t1", "t2", "t3", "t4", "t5", "t6"] :
+            if i in query:
+                selected = i
+                query = query.replace(i,"").strip()
+        
+        items = []
+        
+        desc = lambda i:i
+        if selected == "t1":
+            desc = lambda i: liste[i]["NAME"]
+        elif selected == "t2":
+            desc = lambda i: liste[i]["NAME"] + "\nUSER : " + liste[i]["USER"]
+        elif selected == "t3":
+            desc = lambda i: liste[i]["NAME"] + "\nPID :" + liste[i]["PID"] + "\nUSER : " + liste[i]["USER"]
+        elif selected == "t4":
+            desc = lambda i: liste[i]["NAME"] + "\nPID :" + liste[i]["PID"] + "\nUSER : " + liste[i]["USER"] + "\nTYPE : " + liste[i]["TYPE"]
+        elif selected == "t5":
+            desc = lambda i: liste[i]["NAME"] + "\nPID :" + liste[i]["PID"] + "\nUSER : " + liste[i]["USER"] + "\nTYPE : " + liste[i]["TYPE"] + "\nNODE : " + liste[i]["NODE"]
+        elif selected == "t6":
+            desc = lambda i: liste[i]["NAME"] + "\nPID :" + liste[i]["PID"] + "\nUSER : " + liste[i]["USER"] + "\nTYPE : " + liste[i]["TYPE"] + "\nNODE : " + liste[i]["NODE"] + "\nDEVICE : " + liste[i]["DEVICE"]
+            
+
+
+        if selected == "t0":
+            # Aynı dosya isimleri  başlıkta birleştirilmiş, bahlantı adresleri açıklamada 
             o = {}
             for i in liste.keys():
                 if liste[i]["COMMAND"] in o:
@@ -55,13 +71,39 @@ class KeywordQueryEventListener(EventListener):
                 else:
                     o[liste[i]["COMMAND"]] = [liste[i]["NAME"]]
             
-            items = [
-                ExtensionResultItem(icon='images/icon.png',
+            
+            query = query.replace("t0","").strip()
+            for i in o.keys():
+                if len(query) > 0:
+                    if query in i:
+                        items.append(ExtensionResultItem(icon='images/icon.png',
                                     name=i,
                                     description="\n".join(o[i]),
+                                    on_enter=RunScriptAction(script)))
+                else:
+                    items.append(ExtensionResultItem(icon='images/icon.png',
+                                    name=i,
+                                    description="\n".join(o[i]),
+                                    on_enter=RunScriptAction(script)))
+        else:
+            for i in liste.keys():
+                if len(query) > 0:
+                    if query in liste[i]["COMMAND"]:
+                        items.append( ExtensionResultItem(icon='images/icon.png',
+                                    name=liste[i]["COMMAND"],
+                                    description=desc(i),
                                     on_enter=RunScriptAction(script))
-                for i in o.keys()
-            ]
+                                )
+                else:
+                    items.append( ExtensionResultItem(icon='images/icon.png',
+                                    name=liste[i]["COMMAND"],
+                                    description=desc(i),
+                                    on_enter=RunScriptAction(script))
+                                )
+                
+        
+            
+
 
         return RenderResultListAction(items)
 
