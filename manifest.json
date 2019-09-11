@@ -27,8 +27,8 @@
       "type": "select",
       "name": "Display Style",
       "description": "Select Display Style (or write query)",
-      "default_value": "t1",
-      "options": ["t0","t1"]
+      "default_value": "t0",
+      "options": ["t0", "t1", "t2", "t3", "t4", "t5", "t6"]
     }
   ]
 }
