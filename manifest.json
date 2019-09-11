@@ -1,0 +1,34 @@
+{
+  "required_api_version": "^2.0.0",
+  "name": "Nettekim",
+  "description": "Those connected to the network are display",
+  "developer_name": "Nesivmi - nesidizayn.com",
+  "icon": "images/icon.png",
+  "options": {
+    "query_debounce": 0.5
+  },
+  "preferences": [
+    {
+      "id": "nettekim",
+      "type": "keyword",
+      "name": "Nettekim",
+      "description": "Those connected to the network are display",
+      "default_value": "net"
+    },
+    {
+      "id": "script",
+      "type": "text",
+      "name": "Script",
+      "description": "Script will run when entered",
+      "default_value": "gnome-terminal --geometry=135x30 -- watch -n 1 lsof -i"
+    },
+    {
+      "id": "tips",
+      "type": "select",
+      "name": "Display Style",
+      "description": "Select Display Style (or write query)",
+      "default_value": "t1",
+      "options": ["t0","t1"]
+    }
+  ]
+}
