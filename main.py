@@ -46,22 +46,6 @@ class KeywordQueryEventListener(EventListener):
         
         items = []
         
-        desc = lambda i:i
-        if selected == "t1":
-            desc = lambda i: liste[i]["NAME"]
-        elif selected == "t2":
-            desc = lambda i: liste[i]["NAME"] + "\nUSER : " + liste[i]["USER"]
-        elif selected == "t3":
-            desc = lambda i: liste[i]["NAME"] + "\nPID :" + liste[i]["PID"] + "\nUSER : " + liste[i]["USER"]
-        elif selected == "t4":
-            desc = lambda i: liste[i]["NAME"] + "\nPID :" + liste[i]["PID"] + "\nUSER : " + liste[i]["USER"] + "\nTYPE : " + liste[i]["TYPE"]
-        elif selected == "t5":
-            desc = lambda i: liste[i]["NAME"] + "\nPID :" + liste[i]["PID"] + "\nUSER : " + liste[i]["USER"] + "\nTYPE : " + liste[i]["TYPE"] + "\nNODE : " + liste[i]["NODE"]
-        elif selected == "t6":
-            desc = lambda i: liste[i]["NAME"] + "\nPID :" + liste[i]["PID"] + "\nUSER : " + liste[i]["USER"] + "\nTYPE : " + liste[i]["TYPE"] + "\nNODE : " + liste[i]["NODE"] + "\nDEVICE : " + liste[i]["DEVICE"]
-            
-
-
         if selected == "t0":
             # Aynı dosya isimleri  başlıkta birleştirilmiş, bahlantı adresleri açıklamada 
             o = {}
@@ -71,7 +55,7 @@ class KeywordQueryEventListener(EventListener):
                 else:
                     o[liste[i]["COMMAND"]] = [liste[i]["NAME"]]
             
-            
+                
             query = query.replace("t0","").strip()
             for i in o.keys():
                 if len(query) > 0:
@@ -86,6 +70,8 @@ class KeywordQueryEventListener(EventListener):
                                     description="\n".join(o[i]),
                                     on_enter=RunScriptAction(script)))
         else:
+            desc_list = ["NAME", "USER", "PID", "TYPE", "NODE", "DEVICE"]
+            desc = lambda i: "\n".join([desc_list[u] + " : " + liste[i][desc_list[u]] for u in range(int(selected[1]))])
             for i in liste.keys():
                 if len(query) > 0:
                     if query in liste[i]["COMMAND"]:
@@ -100,10 +86,6 @@ class KeywordQueryEventListener(EventListener):
                                     description=desc(i),
                                     on_enter=RunScriptAction(script))
                                 )
-                
-        
-            
-
 
         return RenderResultListAction(items)
 
