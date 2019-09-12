@@ -47,7 +47,7 @@ class KeywordQueryEventListener(EventListener):
         items = []
         
         if selected == "t0":
-            # Aynı dosya isimleri  başlıkta birleştirilmiş, bağlantı adresleri açıklamada 
+            # Aynı dosya isimleri  başlıkta birleştirilmiş, bahlantı adresleri açıklamada 
             o = {}
             for i in liste.keys():
                 if liste[i]["COMMAND"] in o:
@@ -58,34 +58,22 @@ class KeywordQueryEventListener(EventListener):
                 
             query = query.replace("t0","").strip()
             for i in o.keys():
-                if len(query) > 0:
-                    if query in i:
-                        items.append(ExtensionResultItem(icon='images/icon.png',
-                                    name=i,
-                                    description="\n".join(o[i]),
-                                    on_enter=RunScriptAction(script)))
-                else:
-                    items.append(ExtensionResultItem(icon='images/icon.png',
-                                    name=i,
-                                    description="\n".join(o[i]),
-                                    on_enter=RunScriptAction(script)))
+                if len(query) > 0 and query not in i:
+                    continue
+                items.append(ExtensionResultItem(icon='images/icon.png',
+                                                name=i,
+                                                description="\n".join(o[i]),
+                                                on_enter=RunScriptAction(script)))
         else:
             desc_list = ["NAME", "USER", "PID", "TYPE", "NODE", "DEVICE"]
-            desc = lambda i: "\n".join([desc_list[u] + " : " + liste[i][desc_list[u]] for u in range(int(selected[1]))])
             for i in liste.keys():
-                if len(query) > 0:
-                    if query in liste[i]["COMMAND"]:
-                        items.append( ExtensionResultItem(icon='images/icon.png',
-                                    name=liste[i]["COMMAND"],
-                                    description=desc(i),
-                                    on_enter=RunScriptAction(script))
-                                )
-                else:
-                    items.append( ExtensionResultItem(icon='images/icon.png',
-                                    name=liste[i]["COMMAND"],
-                                    description=desc(i),
-                                    on_enter=RunScriptAction(script))
-                                )
+                if len(query) > 0 and query not in liste[i]["COMMAND"]:
+                    continue
+                items.append( ExtensionResultItem(icon='images/icon.png',
+                                                  name=liste[i]["COMMAND"],
+                                                  description="\n".join([desc_list[u] + " : " + liste[i][desc_list[u]] for u in range(int(selected[1]))]),
+                                                  on_enter=RunScriptAction(script))
+                            )
 
         return RenderResultListAction(items)
 
