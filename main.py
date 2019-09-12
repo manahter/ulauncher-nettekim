@@ -47,7 +47,7 @@ class KeywordQueryEventListener(EventListener):
         items = []
         
         if selected == "t0":
-            # Aynı dosya isimleri  başlıkta birleştirilmiş, bahlantı adresleri açıklamada 
+            # Aynı dosya isimleri  başlıkta birleştirilmiş, bağlantı adresleri açıklamada 
             o = {}
             for i in liste.keys():
                 if liste[i]["COMMAND"] in o:
