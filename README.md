@@ -1,8 +1,8 @@
 # Ulauncher Nettekim
 
-[![Ulauncher Extension](https://img.shields.io/badge/Ulauncher-Extension-green.svg)](https://github.com/nesivmi/ulauncher-nettekim)
+[![Ulauncher Extension](https://img.shields.io/badge/Ulauncher-Extension-green.svg)](https://github.com/manahter/ulauncher-nettekim)
 
-> [Nettekim](https://github.com/nesivmi/ulauncher-nettekim) Display list of files connecting to the internet
+> [Nettekim](https://github.com/manahter/ulauncher-nettekim) Display list of files connecting to the internet
 
 ## Preview
 
@@ -23,7 +23,7 @@
 Open ulauncher preferences window -> extensions -> add extension and paste the following url:
 
 ```
-https://github.com/nesivmi/ulauncher-nettekim
+https://github.com/manahter/ulauncher-nettekim
 ```
 
 ## Usage
