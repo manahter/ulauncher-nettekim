@@ -52,7 +52,7 @@ class KeywordQueryEventListener(EventListener):
             for i in liste.keys():
                 if liste[i]["COMMAND"] in o:
                     o[liste[i]["COMMAND"]].append(liste[i]["NAME"])
-                elif "NAME" in liste[i]:
+                else:
                     o[liste[i]["COMMAND"]] = [liste[i]["NAME"]]
             
                 
